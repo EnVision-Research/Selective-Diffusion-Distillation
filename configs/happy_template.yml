@@ -1,0 +1,76 @@
+train:
+  iterations: &max_iter 5000
+  log_image_interval: 100
+  save_ckpt_interval: 500
+  max_images: 2
+  vis_grad: false
+  vis_x0: false
+
+synthesizer:
+  target: synthesizer.stylegan_synthesizer.StyleganMapperSynthesizer
+  params:
+    generator:
+      target: models.stylegan2.model.StyleGANv2Generator
+      params:
+        size: &resolution 1024
+    generator_ckpt: pretrain/stylegan2-ffhq-config-f.pt
+
+    data:
+      bs_per_gpu: 2
+      num_workers: 2
+      target: dataset.LatentsDataset
+      params:
+        path: latents_ckpt/celaba_100_w+_codes.pt
+
+    mapper:
+      target: models.mapper.latent_mappers.LevelsMapper
+      params:
+        coarse: False
+        medium: True
+        fine: True
+    work_space: &work_space w+
+    trunction: 1.0
+    latent_weight: 0.1
+    resolution: *resolution
+
+guidance_loss:
+  target: loss.guidance_loss.sd_loss.SDLoss
+  params:
+    loss_weight: 1.0
+    text: happy
+    t_policy: predetermined_[200, 300, 400, 500]
+    clip_grad: True
+    clip_grad_topk: 512
+    noise_type: zero
+    skip: True
+    max_iter: *max_iter
+
+regularization_losses:
+  - target: loss.regularization_loss.l2_loss.L2Loss
+    params:
+      space: *work_space
+      loss_weight: 10.0
+
+optimizer:
+  params:
+    lr: 0.005
+    weight_decay: 0.002
+
+search:
+  metrics_type: HQS
+  min_step: 50
+  max_step: 950
+  search_step: 50
+  vis_step_interval: 50
+  select_by: min
+  num_sample: 200
+
+inference:
+  ckpt: ckpt/happy.pt
+  data:
+    bs_per_gpu: 1
+    num_workers: 2
+    target: dataset.OneOfLatentsDataset
+    params:
+      path: latents_ckpt/celaba_100_w+_codes.pt
+      index: 3
