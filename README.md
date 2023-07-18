@@ -4,7 +4,7 @@ This is the official implementation of ***SDD*** (ICCV 2023).
 
 For more details, please refer to:
 
-**Not All Steps are Created Equal: Selective Diffusion Distillation for Image Manipulation [[Paper](https://arxiv.org)]** <br />
+**Not All Steps are Created Equal: Selective Diffusion Distillation for Image Manipulation [[Paper](https://arxiv.org/abs/2307.08448)]** <br />
 Luozhou Wang*, Shuai Yang*, Shu Liu, Yingcong Chen
 
 
@@ -25,7 +25,14 @@ TODO
 If you find this project useful in your research, please consider citing:
 
 ```
-bibtex
+@misc{wang2023steps,
+      title={Not All Steps are Created Equal: Selective Diffusion Distillation for Image Manipulation}, 
+      author={Luozhou Wang and Shuai Yang and Shu Liu and Ying-cong Chen},
+      year={2023},
+      eprint={2307.08448},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 ```
 
 ## Acknowledgement
