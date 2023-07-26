@@ -1,11 +1,20 @@
 # Not All Steps are Created Equal: Selective Diffusion Distillation for Image Manipulation (ICCV 2023)
 
-This is the official implementation of ***SDD*** (ICCV 2023). 
+This is the official implementation of ***SDD*** (ICCV 2023).
+
+Conventional diffusion editing pipeline faces a trade-off problem: adding too much noise affects the fidelity of the image while adding too little affects its editability.
+In this paper, we propose a novel framework, Selective Diffusion Distillation (SDD), that ensures both the fidelity and editability of images.
+Instead of directly editing images with a diffusion model, we train a feedforward image manipulation network under the guidance of the diffusion model.
+Besides, we propose an effective indicator to select the semantic-related timestep to obtain the correct semantic guidance from the diffusion model.
+This approach successfully avoids the dilemma caused by the diffusion process.
+
+<p align="center"> <img src="docs/method_SDD.pdf" width="100%"> </p>
 
 For more details, please refer to:
 
 **Not All Steps are Created Equal: Selective Diffusion Distillation for Image Manipulation [[Paper](https://arxiv.org/abs/2307.08448)]** <br />
 Luozhou Wang*, Shuai Yang*, Shu Liu, Yingcong Chen
+
 
 ## Installation
 1. Create an environment with python==3.8.0 `conda create -n sdd python==3.8.0`
@@ -26,8 +35,8 @@ Luozhou Wang*, Shuai Yang*, Shu Liu, Yingcong Chen
 
 
 ### Infer with pretrain SDD checkpoint (white hair)
-1. Download pretrain SDD checkpoint. Please place it at `./pretrain/white_hair.pt`.
-   [white hair](https://drive.google.com/file/d/12_IleMZ9fddKcPaTXy7cbS22JPrY-kKD/view?usp=share_link)
+1. Download pretrain SDD checkpoint [white hair](https://drive.google.com/file/d/12_IleMZ9fddKcPaTXy7cbS22JPrY-kKD/view?usp=share_link). 
+Please place it at `./pretrain/white_hair.pt`.
 
 2. Run inference. `python inference.py --config ./configs/white_hair.yml --work_dir work_dirs/white_hair/`
 
