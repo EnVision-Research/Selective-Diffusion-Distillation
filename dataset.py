@@ -36,6 +36,17 @@ class StyleSpaceLatentsDataset(Dataset):
     def __init__(self, path):
         self.latents = torch.load(path, map_location=torch.device('cpu'))
         self.space = 'style'
+        # padded_latents = []
+        # # check
+        # for latent in latents:
+        #     latent = latent.cpu()
+        #     if latent.shape[2] == 512:
+        #         padded_latents.append(latent)
+        #     else:
+        #         padding = torch.zeros((latent.shape[0], 1, 512 - latent.shape[2], 1, 1))
+        #         padded_latent = torch.cat([latent, padding], dim=2)
+        #         padded_latents.append(padded_latent)
+        # self.latents = torch.cat(padded_latents, dim=2)
 
     def __len__(self):
         return len(self.latents)

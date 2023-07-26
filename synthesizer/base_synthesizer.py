@@ -39,9 +39,6 @@ class BaseSynthesizer:
     def log_images(self, img_name, dir):
         raise NotImplementedError
 
-    def log_grads(self, img_name, dir, grad=None):
-        raise NotImplementedError
-
     def get_optimized_target(self):
         raise NotImplementedError
 
@@ -53,3 +50,6 @@ class BaseSynthesizer:
 
     def get_reg_loss_after(self, space):
         raise NotImplementedError
+
+    def reset_data(self):
+        self.data = sample_data(self.dataloader)

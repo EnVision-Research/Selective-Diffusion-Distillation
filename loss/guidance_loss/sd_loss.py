@@ -108,7 +108,7 @@ class SDLoss(torch.nn.Module):
 
         return latents
 
-    def forward_normal(self, image, iter, backward=True, return_x0=False):
+    def forward(self, image, iter, backward=True, return_x0=False):
         # text_embeddings = self._encode_text([text]).repeat(image.shape[0], 1, 1)
 
         cond_txt_embed = self._encode_text([self.text]).repeat(image.shape[0], 1, 1)
@@ -131,19 +131,6 @@ class SDLoss(torch.nn.Module):
         elif self.t_policy.startswith('fixed'):
             t = int(self.t_policy.split('_')[-1])
             t = torch.ones([1], dtype=torch.long, device=self.device) * t
-        elif self.t_policy == 'recurrent_increase':
-            t = min(max(iter % self.num_train_timesteps, self.min_step), self.max_step)
-            t = torch.ones([1], dtype=torch.long, device=self.device) * t
-        elif self.t_policy == 'recurrent_decrease':
-            t = self.num_train_timesteps - min(max(iter % self.num_train_timesteps, self.min_step), self.max_step)
-            t = torch.ones([1], dtype=torch.long, device=self.device) * t
-        elif self.t_policy == 'increase':
-            t = min(max(int(iter / self.max_iter * self.num_train_timesteps), self.min_step), self.max_step)
-            t = torch.ones([1], dtype=torch.long, device=self.device) * t
-        elif self.t_policy == 'decrease':
-            t = self.num_train_timesteps - min(max(int(iter / self.max_iter * self.num_train_timesteps), self.min_step),
-                                               self.max_step)
-            t = torch.ones([1], dtype=torch.long, device=self.device) * t
         elif self.t_policy.startswith('predetermined_'):
             t = eval(self.t_policy.split('_')[-1])
             if isinstance(t, list):
@@ -158,9 +145,9 @@ class SDLoss(torch.nn.Module):
         with torch.no_grad():
             # add noise
             if self.noise_type == 'random':
-                noise = torch.randn_like(latents)
+                noise = torch.randn_like(latents, device=self.device)
             elif self.noise_type == 'zero':
-                noise = torch.zeros_like(latents)
+                noise = torch.zeros_like(latents, device=self.device)
             else:
                 raise NotImplementedError
             latents_noisy = self.scheduler.add_noise(latents, noise, t)
@@ -173,11 +160,12 @@ class SDLoss(torch.nn.Module):
         noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
         noise_pred = noise_pred_uncond + self.guidance_scale * (noise_pred_text - noise_pred_uncond)
 
-        x0_pred = self.scheduler._get_prev_sample(latents_noisy, t, 0, noise_pred)
-        x0_pred = x0_pred / 0.18215
-        with torch.no_grad():
-            x0_pred = self.vae.decode(x0_pred).sample
-        x0_pred = F.interpolate(x0_pred, (img_h, img_w), mode='bilinear', align_corners=False)
+        if return_x0:
+            x0_pred = self.scheduler._get_prev_sample(latents_noisy, t, 0, noise_pred)
+            x0_pred = x0_pred / 0.18215
+            with torch.no_grad():
+                x0_pred = self.vae.decode(x0_pred).sample
+            x0_pred = F.interpolate(x0_pred, (img_h, img_w), mode='bilinear', align_corners=False)
 
         w = (1 - self.alphas[t])
         # w = self.alphas[t] ** 0.5 * (1 - self.alphas[t])
@@ -212,6 +200,3 @@ class SDLoss(torch.nn.Module):
                 return loss, x0_pred, t
             else:
                 return loss
-
-    def forward(self, image, iter, backward=True, return_x0=True):
-        return self.forward_normal(image, iter, backward=backward, return_x0=return_x0)

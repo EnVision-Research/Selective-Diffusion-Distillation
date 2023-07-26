@@ -1,10 +1,15 @@
-import argparse
+from torch.utils.tensorboard import SummaryWriter
+
 import os
+from tqdm import tqdm
 
-from train import Trainer
-from utils.dist_util import *
+from matplotlib import pyplot as plt
+
 from utils.file_util import *
+from utils.dist_util import *
 
+import argparse
+from train import Trainer
 
 def main():
     device = "cuda"
@@ -33,9 +38,16 @@ def main():
     # prepare synthesizer
     synthesizer = instantiate_from_config(d['synthesizer'])
 
+    optimized_target, _ = synthesizer.get_optimized_target()
+    optimizer = optim.AdamW(
+        optimized_target, lr=d['optimizer']['params']['lr'],
+        weight_decay=d['optimizer']['params']['weight_decay']
+    )
+
     # start training
     trainer = Trainer(
         synthesizer=synthesizer,
+        optim=optimizer,
         device=device,
         work_dir=args.work_dir,
         guidance_loss=d['guidance_loss'],

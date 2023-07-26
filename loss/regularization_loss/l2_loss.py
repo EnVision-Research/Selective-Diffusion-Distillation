@@ -14,7 +14,7 @@ class L2Loss(nn.Module):
             loss = 0
             for c_hat, c in zip(x_hat, x):
                 loss += F.mse_loss(c_hat, c)
-
+                
         elif self.space == 'w+' or self.space == 'image':
             loss = F.mse_loss(x, x_hat)
         else:
