@@ -1,0 +1,9 @@
+accelerate==0.21.0
+diffusers==0.15.1
+transformers
+-e git+https://github.com/openai/CLIP.git@a1d071733d7111c9c014f024669f959182114e33#egg=clip
+matplotlib==3.7.2
+tqdm==4.65.0
+einops==0.6.1
+chardet==5.1.0
+tensorboard

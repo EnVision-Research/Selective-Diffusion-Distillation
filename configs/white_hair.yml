@@ -70,7 +70,7 @@ search:
   num_sample: 200
 
 inference:
-  ckpt: ./work_dirs/face/white_hair/release/checkpoint/mapper_000100.pt
+  ckpt: ./pretrain/white_hair.pt
   data:
     bs_per_gpu: 1
     num_workers: 2
