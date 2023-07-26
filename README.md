@@ -16,11 +16,11 @@ Luozhou Wang*, Shuai Yang*, Shu Liu, Yingcong Chen
 ### Preparation
 1. Prepare data and pretrain checkpoints.
 
-    Data: [CelebA latent code (train)](), [CelebA latent code (test)]()
+    Data: [CelebA latent code (train)](https://drive.google.com/file/d/1po13cDdoPp0UK1tfB3TLtP7iLO89kaR-/view?usp=share_link), [CelebA latent code (test)](https://drive.google.com/file/d/1po13cDdoPp0UK1tfB3TLtP7iLO89kaR-/view?usp=share_link)
 
-    Pretrain stylegan2: [stylegan2-ffhq]()
+    Pretrain stylegan2: [stylegan2-ffhq](https://drive.google.com/file/d/1po13cDdoPp0UK1tfB3TLtP7iLO89kaR-/view?usp=share_link)
     
-    facenet for IDLoss: [facenet]()
+    Facenet for IDLoss: [facenet](https://drive.google.com/file/d/1po13cDdoPp0UK1tfB3TLtP7iLO89kaR-/view?usp=share_link)
 
 2. Prepare your token from [Huggingface](https://huggingface.co). Please place your token at `./TOKEN`.
 
