@@ -13,14 +13,14 @@ synthesizer:
       params:
         size: &resolution 1024
         style_dim: &style_dim 512
-    generator_ckpt: /dataset/shuaiyang/research/SDD/Style-DreamFusion/pretrain/stylegan2-ffhq-config-f.pt
+    generator_ckpt: ./pretrain/stylegan2-ffhq-config-f.pt
 
     data:
       bs_per_gpu: 2
       num_workers: 2
       target: dataset.LatentsDataset
       params:
-        path: /dataset/shuaiyang/research/SDD/Style-DreamFusion/pretrain/train_celeba_w+_codes.pt
+        path: ./data/train_celeba_w+_codes.pt
 
     mapper:
       target: models.mapper.latent_mappers.LevelsMapper
@@ -53,7 +53,7 @@ regularization_losses:
   - target: loss.regularization_loss.id_loss.IDLoss
     params:
       loss_weight: 1.0
-      path: /dataset/shuaiyang/research/SDD/Style-DreamFusion/pretrain/model_ir_se50.pth
+      path: ./pretrain/model_ir_se50.pth
 
 optimizer:
   params:
@@ -70,10 +70,10 @@ search:
   num_sample: 200
 
 inference:
-  ckpt: /dataset/shuaiyang/research/SDD/Style-DreamFusion-v2/work_dirs/mapper_w+/face/white_hair/release/checkpoint/mapper_000100.pt
+  ckpt: ./work_dirs/face/white_hair/release/checkpoint/mapper_000100.pt
   data:
     bs_per_gpu: 1
     num_workers: 2
     target: dataset.LatentsDataset
     params:
-      path: /dataset/shuaiyang/research/SDD/Style-DreamFusion/pretrain/test_faces.pt
+      path: ./data/test_faces.pt
