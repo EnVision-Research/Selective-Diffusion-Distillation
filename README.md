@@ -8,7 +8,7 @@ Instead of directly editing images with a diffusion model, we train a feedforwar
 Besides, we propose an effective indicator to select the semantic-related timestep to obtain the correct semantic guidance from the diffusion model.
 This approach successfully avoids the dilemma caused by the diffusion process.
 
-<p align="center"> <img src="docs/method_SDD.pdf" width="100%"> </p>
+<p align="center"> <img src="docs/SDD.png" width="100%"> </p>
 
 For more details, please refer to:
 
