@@ -25,9 +25,9 @@ Luozhou Wang*, Shuai Yang*, Shu Liu, Yingcong Chen
 ### Preparation
 1. Prepare data and pretrain checkpoints.
 
-    Data: [CelebA latent code (train)](https://drive.google.com/file/d/1po13cDdoPp0UK1tfB3TLtP7iLO89kaR-/view?usp=share_link), [CelebA latent code (test)](https://drive.google.com/file/d/1po13cDdoPp0UK1tfB3TLtP7iLO89kaR-/view?usp=share_link)
+    Data: [CelebA latent code (train)](https://drive.google.com/file/d/1MJ0ze9NYtchsp8qnTc6BDjQHdU7qFinY/view?usp=sharing), [CelebA latent code (test)](https://drive.google.com/file/d/1pwIaAETvF5EAaDn8hOXXVfpGVE0ICAuI/view?usp=sharing)
 
-    Pretrain stylegan2: [stylegan2-ffhq](https://drive.google.com/file/d/1po13cDdoPp0UK1tfB3TLtP7iLO89kaR-/view?usp=share_link)
+    Pretrain stylegan2: [stylegan2-ffhq](https://drive.google.com/file/d/1sqK2ScPO3hhuET-C-HEI-zgG0L_QGmG7/view?usp=sharing)
     
     Facenet for IDLoss: [facenet](https://drive.google.com/file/d/1po13cDdoPp0UK1tfB3TLtP7iLO89kaR-/view?usp=share_link)
 
